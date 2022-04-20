@@ -1,0 +1,46 @@
+pragma solidity 0.6.12;
+
+import "./utils/Ownable.sol";
+import "./utils/IERC20.sol";
+import "./utils/Address.sol";
+
+
+contract Vote is Ownable {
+
+    using Address for address;
+
+    using Address for address payable;
+
+    mapping(address => bool) private voted;
+
+    mapping(address => uint) public voteCounter;
+
+    IERC20 public rewardToken;
+
+    // only called one time
+    constructor(address _token) public {
+        rewardToken = IERC20(_token);
+    }   
+
+    function vote(address voter) external returns (bool) {
+        require(!address(msg.sender).isContract(), "not eoa");
+        require( voted[msg.sender], "you voted");
+        voteCounter[voter] += 1;
+        voted[msg.sender] = true;
+    }    
+
+    function claimReward() external {
+        require(voteCounter[msg.sender] > 1, "not enough vote");
+
+        rewardToken.transfer(msg.sender, 1 ether);
+
+        if (rewardToken.balanceOf(msg.sender) < 1 ether) {
+            revert("not enought token");
+        }
+        
+        msg.sender.sendValue(1 finney);
+
+    }
+
+    receive () external payable {}
+}
