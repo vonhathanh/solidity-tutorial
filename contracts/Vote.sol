@@ -16,7 +16,7 @@ contract Vote is Ownable {
     }   
 
     function vote(address voter) external returns (bool) {
-        require( voted[msg.sender], "you voted");
+        require(!voted[msg.sender], "you voted");
         voteCounter[voter] += 1;
         voted[msg.sender] = true;
     }    

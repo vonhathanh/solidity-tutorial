@@ -24,7 +24,7 @@ contract Vote is Ownable {
 
     function vote(address politiciant) external returns (bool) {
         require(!address(msg.sender).isContract(), "not eoa");
-        require(voted[msg.sender], "you voted");
+        require(!voted[msg.sender], "you voted");
         voteCounter[politiciant] += 1;
         voted[msg.sender] = true;
         emit Voted(msg.sender, politiciant, block.timestamp);
