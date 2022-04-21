@@ -15,6 +15,8 @@ contract Vote is Ownable {
 
     IERC20 public rewardToken;
 
+    event Voted(address voter, address politiciant, uint256 time);
+
     // only called one time
     constructor(address _token) public {
         rewardToken = IERC20(_token);
@@ -25,6 +27,7 @@ contract Vote is Ownable {
         require(voted[msg.sender], "you voted");
         voteCounter[politiciant] += 1;
         voted[msg.sender] = true;
+        emit Voted(msg.sender, politiciant, block.timestamp);
     }
 
     function claimReward() external {
