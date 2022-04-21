@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "ethereumjs-abi": "^0.6.8",
     "ethers": "^5.6.4",
     "web3": "^1.7.3"
   }
