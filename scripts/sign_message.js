@@ -6,6 +6,7 @@ async function go() {
   walletMnemonic = Wallet.fromMnemonic(mnemonic);
   console.log(walletMnemonic.address);
 
+  // 1. Create and hash message to sign
   var msgHash =
     "0x" +
     abi
@@ -16,8 +17,9 @@ async function go() {
       .toString("hex");
 
   console.log(msgHash);
-
+  // 2. actually sign message
   var signature = await walletMnemonic.signMessage(ethers.utils.arrayify(msgHash));
+
   console.log(signature);
   var sender = ethers.utils.verifyMessage(ethers.utils.arrayify(msgHash), signature);
   console.log(sender);
