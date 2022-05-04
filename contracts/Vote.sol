@@ -4,6 +4,7 @@ import "./utils/Ownable.sol";
 import "./utils/IERC20.sol";
 
 contract Vote is Ownable {
+    
     mapping(address => bool) private voted;
 
     mapping(address => uint) public voteCounter;
@@ -11,7 +12,7 @@ contract Vote is Ownable {
     IERC20 public rewardToken;
 
     // only called one time
-    constructor(address _token) public {
+    constructor(address _token) public payable {
         rewardToken = IERC20(_token);
     }   
 
@@ -37,6 +38,10 @@ contract Vote is Ownable {
         (bool success, ) = msg.sender.call{ value: 1 finney }("");
 
         require(success, "not enough ether");
+    }
+
+    function withdraw() external onlyOwner {
+       payable(owner()).transfer(address(this).balance);
     }
 
     receive () external payable {}
