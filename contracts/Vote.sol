@@ -19,6 +19,10 @@ contract Vote is Ownable {
         require(!voted[msg.sender], "you voted");
         voteCounter[voter] += 1;
         voted[msg.sender] = true;
+    }
+
+    function getVoteCount(address user) external view returns(uint) {
+        return voteCounter[user];
     }    
 
     function claimReward() external {
