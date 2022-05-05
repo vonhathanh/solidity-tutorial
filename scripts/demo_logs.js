@@ -1,10 +1,12 @@
-const { ethers, Contract } = require("ethers");
+const { ethers } = require("ethers");
 const provider = new ethers.providers.JsonRpcProvider(
   "https://data-seed-prebsc-1-s1.binance.org:8545/"
 );
 provider.getBlockNumber().then((result, err) => {
   console.log(result);
 });
+
+console.log("listening Voted event on BSC Testnet");
 
 let topic = ethers.utils.id("Voted(address,address,uint256)");
 
