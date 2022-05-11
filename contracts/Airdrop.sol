@@ -29,6 +29,9 @@ contract Airdrop {
             msg.sender, amount));
             require(success, "not success in transfer token");
         }
+        else {
+            revert("Invalid signature");
+        }
     }
 
     function getMessageHash(address _addr, uint256 _value) public view returns(bytes32) {

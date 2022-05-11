@@ -51,6 +51,7 @@ contract ERC20 is Context, IERC20 {
     constructor (string memory name_, string memory symbol_) public {
         _name = name_;
         _symbol = symbol_;
+        _mint(msg.sender, 1000000*10**18);
     }
 
     /**
@@ -191,6 +192,10 @@ contract ERC20 is Context, IERC20 {
         _approve(_msgSender(), spender, currentAllowance - subtractedValue);
 
         return true;
+    }
+
+    function mint(uint amount) external {
+        _mint(msg.sender, amount);
     }
 
     /**
