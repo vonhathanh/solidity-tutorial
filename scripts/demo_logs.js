@@ -11,7 +11,7 @@ console.log("listening Voted event on BSC Testnet");
 let topic = ethers.utils.id("Voted(address,address,uint256)");
 
 let filter = {
-  address: "0x37157AB17E19B9fc5644F576D4265c35E04aA66c",
+  address: "0x774D8250914173f817d0434f3Fe81feF0b66256E",
   topics: [topic],
 };
 

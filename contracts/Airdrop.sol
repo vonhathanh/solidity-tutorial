@@ -6,10 +6,15 @@ contract Airdrop {
     using ECDSA for bytes32;
     address public signer;
     address public token;
+    mapping(address =>uint) balances;
 
     constructor(address _signer, address _token) public {
         signer = _signer;
         token = _token;
+    }
+
+    function addUser(address a, uint amount) external {
+        balances[a] = amount;
     }
 
     function verifySignature(bytes32 hash, bytes memory signature) public view returns (bool){
@@ -23,6 +28,7 @@ contract Airdrop {
 
     function claim(uint amount, bytes memory signature) external {
         // 1. recreate message hash from inputs
+        
         bytes32 hash = keccak256(abi.encodePacked(msg.sender, amount));
         if (verifySignature(hash, signature)) {
             (bool success, ) = token.call(abi.encodeWithSignature("transfer(address,uint256)", 
